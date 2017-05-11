@@ -1,4 +1,4 @@
-# start, stop and restart script for unix mongodb-server
+# script (start, stop and restart) for unix mongodb-server
 
 ## Install MongoDB Community Edition
 
@@ -42,7 +42,7 @@ setParameter:
 ...
 ```
 
-## start, stop, restart script usage
+## Usage
 Set the following variables inside the script
 
 mongodb home path:
@@ -57,3 +57,7 @@ mongodb configuration file path:
 ```
 MONGODBCONFIG=".../mongod.conf"
 ```
+
+## Authors
+
+* **Patrick Kowalik** - *Initial work* - [Mongo_Start_Stop](https://github.com/patrick0585/Mongo_Start_Stop)
