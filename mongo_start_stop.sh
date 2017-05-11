@@ -15,7 +15,7 @@
 #          BUGS:  ---
 #         NOTES:  ---
 #        AUTHOR:  Patrick Kowalik, kowalik.patrick@online.de
-#    REPOSITORY:  https://github.com/patrick0585/Solr-Core-Creator
+#    REPOSITORY:  https://github.com/patrick0585/Mongo_Start_Stop
 #       COMPANY:  ---
 #       VERSION:  1.0.0
 #       CREATED:  10/05/2017 12:00:00 PM MDT
@@ -82,8 +82,3 @@ case "$1" in
 	   exit;
 	   ;;
 esac
-
-
-
-#PID=$(ps -ef | grep "[m]ongodb" | awk {'print $2'})
-#echo $PID
