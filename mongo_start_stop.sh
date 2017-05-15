@@ -81,6 +81,6 @@ case "$1" in
 		 ;;
 	
 	*) echo "unknown command"
-	   exit;
+	   exit
 	   ;;
 esac
