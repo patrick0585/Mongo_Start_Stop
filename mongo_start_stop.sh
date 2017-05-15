@@ -17,65 +17,67 @@
 #        AUTHOR:  Patrick Kowalik, kowalik.patrick@online.de
 #    REPOSITORY:  https://github.com/patrick0585/Mongo_Start_Stop
 #       COMPANY:  ---
-#       VERSION:  1.0.0
-#       CREATED:  10/05/2017 12:00:00 PM MDT
+#       VERSION:  1.1.2
+#       CREATED:  15/05/2017 22:00:00 PM MDT
 #      REVISION:  ---
 #===============================================================================
 
-VERSION=1.0.0
-SCRIPTNAME=$(basename $0)
-MONGOHOME=""
-MONGOBIN="$MONGOHOME/bin"
-MONGOD="$MONGOBIN/mongod"
-MONGODBPATH=""
-MONGODBCONFIG=""
+VERSION=1.1.2
+SCRIPTNAME=$(basename "$0")
+MONGOHOME=
+MONGOBIN=$MONGOHOME/bin
+MONGOD=$MONGOBIN/mongod
+MONGODBPATH=
+MONGODBCONFIG=
 
 
 if [ $# != 1 ]
 then
 	echo "Usage: $SCRIPTNAME [start|stop|restart]"
-	exit;
+	exit
 fi
 
-function isRunning {
-    PID=$(ps -ef | grep "[m]ongodb" | awk {'print $2'})
-    echo $PID    
+pid() {
+    ps -ef | awk '/[m]ongodb/ {print $2}'
 }
 
-function stopServer {
-    rc=$(isRunning)
-    echo "... stopping mongodb-server with pid: $rc"    
-    if [ ! -z "$rc" ]; then
-	sudo kill $rc
+stopServer() {
+    PID=$(pid)
+    if [ ! -z "$PID" ]; 
+    then
+        echo "... stopping mongodb-server with pid: $PID"
+	sudo kill $PID
+    else
+        echo "... mongodb-server is not running!"
     fi
 }
 
-function startServer {
-    echo "... starting mongodb-server"
-    rc=$(isRunning)
-    if [ ! -z "$rc" ];then
-        stopServer $rc
+startServer() {
+    PID=$(pid)
+    if [ ! -z "$PID" ];
+    then
+        echo "... mongodb-server already running with pid: $PID"
+    else
+        echo "... starting mongodb-server"
+        sudo "$MONGOD" --dbpath "$MONGODBPATH" --config "$MONGODBCONFIG"
     fi
-    sudo $MONGOD --dbpath $MONGODBPATH --config $MONGODBCONFIG
 }
 
-function restartServer {
+restartServer() {
     stopServer
+    sleep 1s
     startServer    
 }
 
 case "$1" in
 
-	start) echo "start"
-	       startServer
+	start) startServer
 	       ;;
 
-	stop) echo "stop"
-	       stopServer
-	       ;;
+	stop) stopServer
+	      ;;
 
-	restart) echo "restart"
-		 restartServer
+	restart) restartServer
 		 ;;
 	
 	*) echo "unknown command"
